@@ -19,10 +19,10 @@
       <img class="profile__avatar" src="./images/Jacques-Yves_Cousteau.jpg" alt="Жак-Ив Кусто">
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <button class="profile__edit-button"></button>
+        <button class="profile__edit-button" type="button"></button>
         <p class="profile__description">Исследователь океана</p>
       </div>
-      <button class="profile__add-button"></button>
+      <button class="profile__add-button" type="button"></button>
     </section>
 
     <section class="elements">
@@ -30,42 +30,42 @@
         <img class="element__image" src="./images/element_karachaevsk.jpg" alt="Карачаевск">
         <div class="element__title-like">
           <h2 class="element__title">Карачаевск</h2>
-          <button class="element__like-button element__like-button_active"></button>
+          <button class="element__like-button element__like-button_active" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/element_elbrus.jpg" alt="Гора Эльбрус">
         <div class="element__title-like">
           <h2 class="element__title">Гора Эльбрус</h2>
-          <button class="element__like-button"></button>
+          <button class="element__like-button" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/element_dombay.jpg" alt="Домбай">
         <div class="element__title-like">
           <h2 class="element__title">Домбай</h2>
-          <button class="element__like-button"></button>
+          <button class="element__like-button" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/element_elbrus.jpg" alt="Гора Эльбрус">
         <div class="element__title-like">
           <h2 class="element__title">Гора Эльбрус</h2>
-          <button class="element__like-button"></button>
+          <button class="element__like-button" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/element_dombay.jpg" alt="Домбай">
         <div class="element__title-like">
           <h2 class="element__title">Домбай</h2>
-          <button class="element__like-button"></button>
+          <button class="element__like-button" type="button"></button>
         </div>
       </div>
       <div class="element">
         <img class="element__image" src="./images/element_karachaevsk.jpg" alt="Карачаево-Черкесск">
         <div class="element__title-like">
           <h2 class="element__title">Карачаево-Черкесск</h2>
-          <button class="element__like-button"></button>
+          <button class="element__like-button" type="button"></button>
         </div>
       </div>
     </section>
@@ -76,13 +76,15 @@
   </footer>
 
   <div class="popup">
-    <form class="popup__container">
+    <div class="popup__container">
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <input class="popup__name" type="text" name="profile__name" value="Жак-Ив Кусто">
-      <input class="popup__description" type="text" name="profile__description" value="Исследователь океана">
+      <form class="popup__form" name="profile_editing">
+      <input class="popup__input popup__input_name" type="text" name="profile__name" value="Жак-Ив Кусто" autocomplete="on">
+      <input class="popup__input popup__input_description" type="text" name="profile__description" value="Исследователь океана" autocomplete="on">
       <button class="popup__save-button" type="submit">Сохранить</button>
-      <button class="popup__close-button" type="button"></button>
     </form>
+      <button class="popup__close-button" type="button"></button>
+    </div>
   </div>
 
   <script src="./scripts/index.js" defer></script>

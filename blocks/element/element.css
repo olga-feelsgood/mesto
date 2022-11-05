@@ -1,13 +1,8 @@
 .element {
   max-width: 282px;
-  min-height: 362px;
   background-color: #fff;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 282px minmax(min-content, max-content);
   border-radius: 10px;
-}
-
-.element:last-of-type {
-  /* padding-bottom: 0;*/
 }

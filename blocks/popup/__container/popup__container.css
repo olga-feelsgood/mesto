@@ -7,13 +7,11 @@
   position: relative;
   border-radius: 10px;
   align-items: center;
-  min-height: 330px;
   justify-content: center;
 }
 
 @media screen and (max-width: 500px) {
   .popup__container {
     max-width: 282px;
-    min-height: 322px;
   }
 }
