@@ -4,13 +4,12 @@
   height: 50px;
   background-color: #000;
   box-sizing: border-box;
-  padding-bottom: 37px;
   text-align: center;
   cursor: pointer;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
-  padding-top: 14px;
+  margin-top: 20px;
   transition: opacity .4s ease;
 }
 
@@ -20,8 +19,10 @@
 
 @media screen and (max-width: 500px) {
   .popup__save-button {
-    max-width: 238px;
+    width: 238px;
+    height: 46px;
     font-size: 14px;
     line-height: 17px;
+    margin-top: 22px;
   }
 }
