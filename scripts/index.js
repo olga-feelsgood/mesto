@@ -2,10 +2,10 @@ const editProfile = document.querySelector('.profile__edit-button');
 const addProfile = document.querySelector('.profile__add-button');
 const popupElem = document.querySelector('.popup');
 const popupClose = popupElem.querySelector('.popup__close-button');
-const popupAdd = document.querySelector('.popup__add');
+const popupAdd = document.querySelector('.popup-add');
 const popupAddClose = popupAdd.querySelector('.popup__close-button');
 const likeButton = document.querySelector('.element__like-button');
-const popupFigure = document.querySelector('.popup__figure');
+const popupFigure = document.querySelector('.popup-figure');
 const popupFigClose = popupFigure.querySelector('.popup__close-button');
 
 
