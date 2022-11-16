@@ -52,34 +52,34 @@ const cardTemplate = document.querySelector('#cardtemplate').content.querySelect
 const figurePopupPhoto = figurePopup.querySelector('.figure__photo');
 const figurePopupTitle = figurePopup.querySelector('.figure__title');
 
-function handleOpenPopup(a) {
+function openPopup(a) {
   a.classList.add('popup_opened');
 }
 
-function handleClosePopup(a) {
+function closePopup(a) {
   a.classList.remove('popup_opened');
 }
 
 profilePopupOpenButton.addEventListener('click', () => {
   nameInputProfilePopupForm .value = profileName.textContent;
   jobInputProfilePopupForm.value = profileDescription.textContent;
-  handleOpenPopup(profilePopup);
+  openPopup(profilePopup);
 });
 
 cardPopupAddButton.addEventListener('click', () => {
-  handleOpenPopup(cardPopup);
+  openPopup(cardPopup);
 });
 
 profilePopupCloseButton.addEventListener('click', () => {
-  handleClosePopup(profilePopup)
+  closePopup(profilePopup)
 });
 
 cardPopupCloseButton.addEventListener('click', () => {
-  handleClosePopup(cardPopup)
+  closePopup(cardPopup)
 });
 
 figurePopupCloseButton.addEventListener('click', () => {
-  handleClosePopup(figurePopup)
+  closePopup(figurePopup)
 });
 
 //profilePopup.addEventListener('click', (event) => {
@@ -88,33 +88,33 @@ figurePopupCloseButton.addEventListener('click', () => {
 //  }
 //});
 
-function handleSubmitProfileForm(evt) {
+function submitProfileForm(evt) {
   evt.preventDefault();
 
   profileName.textContent = nameInputProfilePopupForm.value;
   profileDescription.textContent = jobInputProfilePopupForm.value;
 
-  handleClosePopup(profilePopup);
+  closePopup(profilePopup);
 }
 
-profilePopupForm.addEventListener('submit', handleSubmitProfileForm);
+profilePopupForm.addEventListener('submit', submitProfileForm);
 
-const hadleDeleteCard = (event) => {
+const deleteCard = (event) => {
   event.target.closest('.element').remove();
 }
 
-const hadleLikeCard = (event) => {
+const likeCard = (event) => {
   event.target.closest('.element__like-button').classList.toggle('element__like-button_active');
 }
 
-const hadleZoomImage = (event) => {
-  handleOpenPopup(figurePopup);
+const openZoomImage = (event) => {
+  openPopup(figurePopup);
   figurePopupPhoto.src = event.target.closest('.element__image').src;
   figurePopupPhoto.alt = event.target.closest('.element__image').alt;
   figurePopupTitle.textContent = event.target.closest('.element__image').alt;
 }
 
-const handleGenerateCard = (dataCard) => {
+const generateCard = (dataCard) => {
   const newCard = cardTemplate.cloneNode(true);
 
   const name = newCard.querySelector('.element__title');
@@ -125,35 +125,35 @@ const handleGenerateCard = (dataCard) => {
   link.alt = dataCard.name;
 
   const deleteBtn = newCard.querySelector('.element__delete-button');
-  deleteBtn.addEventListener('click', hadleDeleteCard);
+  deleteBtn.addEventListener('click', deleteCard);
 
   const likeBtn = newCard.querySelector('.element__like-button');
-  likeBtn.addEventListener('click', hadleLikeCard);
+  likeBtn.addEventListener('click', likeCard);
 
   const zoomImage = newCard.querySelector('.element__image');
-  zoomImage.addEventListener('click', hadleZoomImage);
+  zoomImage.addEventListener('click', openZoomImage);
 
   return newCard;
 }
 
-const handleRenderCard = (dataCard) => {
-  cardElement.prepend(handleGenerateCard(dataCard));
+const renderCard = (dataCard) => {
+  cardElement.prepend(generateCard(dataCard));
 }
 
 initialCards.forEach((dataCard) => {
-  handleRenderCard(dataCard);
+  renderCard(dataCard);
 });
 
 
-function handleSubmitCardForm(evt) {
+function submitCardForm(evt) {
   evt.preventDefault();
 
-  handleRenderCard({ name: placeInputCardPopupForm.value, link: sourceInputCardPopupForm.value })
+  renderCard({ name: placeInputCardPopupForm.value, link: sourceInputCardPopupForm.value })
 
   placeInputCardPopupForm.value = '';
   sourceInputCardPopupForm.value = '';
 
-  handleClosePopup(cardPopup);
+  closePopup(cardPopup);
 }
 
-cardPopupForm.addEventListener('submit', handleSubmitCardForm);
+cardPopupForm.addEventListener('submit', submitCardForm);
