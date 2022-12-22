@@ -1,42 +1,12 @@
 import Card from './Card.js'
 import FormValidator from './FormValidator.js'
-
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+import { validationConfig, initialCards } from './constants.js'
 
 const profilePopupOpenButton = document.querySelector('.profile__edit-button');
 const cardPopupAddButton = document.querySelector('.profile__add-button');
 const profilePopup = document.querySelector('.popup-profile');
-//const profilePopupCloseButton = profilePopup.querySelector('.popup__close-button');
 const cardPopup = document.querySelector('.popup-add');
-//const cardPopupCloseButton = cardPopup.querySelector('.popup__close-button');
-//const cardLikeButton = document.querySelector('.element__like-button');
 const figurePopup = document.querySelector('.popup-figure');
-//const figurePopupCloseButton = figurePopup.querySelector('.popup__close-button');
 const cardPopupSaveButton = cardPopup.querySelector('.popup__save-button');
 
 
@@ -51,7 +21,6 @@ const placeInputCardPopupForm = cardPopup.querySelector('.popup__input_type_plac
 const sourceInputCardPopupForm = cardPopup.querySelector('.popup__input_type_source');
 
 const cardElement = document.querySelector('.elements');
-//const cardTemplate = document.querySelector('#cardtemplate').content.querySelector('.element');
 
 const figurePopupPhoto = figurePopup.querySelector('.figure__photo');
 const figurePopupTitle = figurePopup.querySelector('.figure__title');
@@ -79,10 +48,7 @@ function closeByEscape(evt) {
 
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('popup__close-button')) {
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
       closePopup(popup)
     }
   })
@@ -98,13 +64,12 @@ cardPopupAddButton.addEventListener('click', () => {
   openPopup(cardPopup);
 });
 
-/*
-profilePopup.addEventListener('click', (event) => {
-  if (event.target === event.currentTarget) {
-    closePopup(profilePopup);
-  }
-});
-*/
+function handleOpenPopup(name, link) {
+  openPopup(figurePopup);
+  figurePopupPhoto.src = link
+  figurePopupPhoto.alt = name;
+  figurePopupTitle.textContent = name;
+}
 
 function submitProfileForm(evt) {
   evt.preventDefault();
@@ -116,53 +81,14 @@ function submitProfileForm(evt) {
 }
 
 profilePopupForm.addEventListener('submit', submitProfileForm);
-/*
-const deleteCard = (event) => {
-  event.target.closest('.element').remove();
-}
 
-const likeCard = (event) => {
-  event.target.closest('.element__like-button').classList.toggle('element__like-button_active');
-}
-
-const openZoomImage = (event) => {
-  openPopup(figurePopup);
-  figurePopupPhoto.src = event.target.closest('.element__image').src;
-  figurePopupPhoto.alt = event.target.closest('.element__image').alt;
-  figurePopupTitle.textContent = event.target.closest('.element__image').alt;
-}
-
-const generateCard = (dataCard) => {
-  const newCard = cardTemplate.cloneNode(true);
-
-  const name = newCard.querySelector('.element__title');
-  name.textContent = dataCard.name;
-
-  const link = newCard.querySelector('.element__image');
-  link.src = dataCard.link;
-  link.alt = dataCard.name;
-
-  const deleteBtn = newCard.querySelector('.element__delete-button');
-  deleteBtn.addEventListener('click', deleteCard);
-
-  const likeBtn = newCard.querySelector('.element__like-button');
-  likeBtn.addEventListener('click', likeCard);
-
-  const zoomImage = newCard.querySelector('.element__image');
-  zoomImage.addEventListener('click', openZoomImage);
-
-  return newCard;
-}
-*/
 const renderCard = (dataCard) => {
-  const card = new Card(dataCard, '#cardtemplate');
+  const card = new Card(dataCard, '#cardtemplate', handleOpenPopup);
   const newCardElement = card.generateCard();
   cardElement.prepend(newCardElement);
 }
 
-initialCards.forEach((dataCard) => {
-  renderCard(dataCard);
-});
+initialCards.forEach(renderCard);
 
 
 function submitCardForm(evt) {
@@ -171,32 +97,21 @@ function submitCardForm(evt) {
   renderCard({ name: placeInputCardPopupForm.value, link: sourceInputCardPopupForm.value })
 
   evt.target.reset();
-  cardPopupSaveButton.disabled = true;
-  cardPopupSaveButton.classList.add('popup__save-button_inactive');
+
+  cardFormForValidate.disableSubmitButton();
   closePopup(cardPopup);
 }
 
 cardPopupForm.addEventListener('submit', submitCardForm);
 
 
-const cardFormForValidate = new FormValidator({
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-}, '.popup__card-editing');
+
+const addCardFormElement = document.querySelector('.popup__card-editing')
+const cardFormForValidate = new FormValidator(validationConfig, addCardFormElement);
 
 const cardFormValidation = cardFormForValidate.enableValidation();
 
-const profileFormForValidate = new FormValidator({
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_inactive',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__input-error_active'
-}, '.popup__profile-editing');
+const profileFormElement = document.querySelector('.popup__profile-editing')
+const profileFormForValidate = new FormValidator(validationConfig, profileFormElement);
 
 const profileFormValidation = profileFormForValidate.enableValidation();
-
-export {openPopup, figurePopup, figurePopupPhoto, figurePopupTitle};
